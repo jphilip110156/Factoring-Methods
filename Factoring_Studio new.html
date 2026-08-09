@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Factoring Studio — All Methods, Practice &amp; Quiz</title>
+<style>
+  :root {
+    --navy: #0b2545;
+    --teal: #1f7a6c;
+    --teal-dark: #145a4f;
+    --gold: #b8860b;
+    --red: #b3261e;
+    --green: #1b7a2e;
+    --purple: #6a4c93;
+    --lightblue: #eaf3fb;
+    --lightgreen: #eaf6ec;
+    --lightgold: #fff7e6;
+    --lightred: #fdeceb;
+    --lightpurple: #f1ecf7;
+    --border: #d7dee6;
+    --bg: #f7f9fb;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Calibri, Arial, sans-serif;
+    color: #1c1c1c;
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 1020px; margin: 0 auto; padding: 28px 24px 70px; }
+  header.page-header {
+    background: linear-gradient(135deg, var(--navy), var(--teal-dark));
+    color: white;
+    padding: 34px 24px;
+    text-align: center;
+  }
+  header.page-header h1 { margin: 0 0 6px; font-size: 27px; }
+  header.page-header p { margin: 0; font-size: 15px; opacity: 0.9; }
+
+  .tabs {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin: 26px 0 22px; border-bottom: 3px solid var(--border);
+  }
+  .tab-btn {
+    background: #e9eef3; border: none; border-radius: 8px 8px 0 0;
+    padding: 11px 15px; font-size: 13.5px; font-weight: 600; color: var(--navy);
+    cursor: pointer; transition: background 0.15s;
+  }
+  .tab-btn:hover { background: #dbe6ef; }
+  .tab-btn.active { background: var(--navy); color: white; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  h2.section-title {
+    color: var(--navy); font-size: 22px; border-bottom: 3px solid var(--teal);
+    padding-bottom: 8px; margin-top: 0;
+  }
+  h3.sub-title { color: var(--teal-dark); font-size: 17px; margin-top: 26px; }
+
+  .card {
+    background: white; border: 1px solid var(--border); border-radius: 10px;
+    padding: 22px 24px; margin: 16px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .note {
+    background: var(--lightgold); border-left: 4px solid var(--gold);
+    padding: 12px 16px; font-size: 14.5px; margin: 16px 0; border-radius: 4px;
+  }
+  .rule {
+    background: var(--lightblue); border-left: 4px solid var(--navy);
+    padding: 12px 16px; font-size: 15px; margin: 14px 0; border-radius: 4px;
+  }
+
+  .step-box {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: #f7fafc; border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 18px; margin: 12px 0;
+  }
+  .step-num {
+    flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%;
+    background: var(--teal); color: white; font-weight: 800; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .step-content { flex: 1; font-size: 15px; }
+  .step-content .formula-line { font-family: "Cambria Math", Cambria, Georgia, serif; font-size: 16px; margin: 4px 0; }
+
+  .final-answer {
+    background: var(--lightgreen); border: 2px solid var(--teal); border-radius: 8px;
+    padding: 14px 20px; margin-top: 14px; font-family: "Cambria Math", Cambria, Georgia, serif;
+    font-size: 19px; font-weight: 700; color: var(--navy); text-align: center;
+  }
+
+  /* Box method table */
+  .box-wrap { display: flex; justify-content: center; margin: 18px 0; }
+  table.box-table { border-collapse: collapse; font-family: "Cambria Math", Cambria, Georgia, serif; font-size: 18px; }
+  table.box-table td, table.box-table th {
+    border: 2px solid var(--navy); width: 90px; height: 60px; text-align: center; padding: 4px;
+  }
+  table.box-table th { background: var(--lightblue); color: var(--navy); font-weight: 700; }
+  table.box-table td.corner { border: none; background: transparent; }
+  table.box-table td.cell-main { background: #fdf6e3; font-weight: 700; }
+  table.box-table td.cell-cross { background: #f0f7f4; font-weight: 700; }
+  table.box-table td.unknown { color: #aaa; font-style: italic; font-size: 14px; }
+
+  /* Perfect square / diff of squares pattern box */
+  .pattern-box {
+    background: var(--navy); color: white; border-radius: 10px; padding: 18px 24px; margin: 16px 0;
+    text-align: center; font-family: "Cambria Math", Cambria, Georgia, serif; font-size: 20px;
+  }
+
+  /* Worked example */
+  .worked-example { border: 1px solid var(--border); border-radius: 10px; padding: 18px 22px; margin: 18px 0; background: white; }
+  .worked-example h4 { margin: 0 0 10px; color: var(--navy); }
+  .given-block {
+    background: #f7fafc; border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px 18px; margin: 10px 0 16px; font-family: "Cambria Math", Cambria, Georgia, serif; font-size: 18px; text-align: center;
+  }
+
+  /* Sort the Type */
+  .sort-item { border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; margin: 14px 0; background: white; }
+  .sort-poly { font-family: "Cambria Math", Cambria, Georgia, serif; font-size: 19px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+  .sort-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+  .sort-btn {
+    background: #e9eef3; border: 1.5px solid var(--border); border-radius: 6px;
+    padding: 8px 14px; font-size: 13.5px; font-weight: 600; color: var(--navy); cursor: pointer;
+  }
+  .sort-btn:hover { background: #dbe6ef; }
+  .sort-btn.correct-pick { background: var(--lightgreen); border-color: var(--green); color: var(--green); }
+  .sort-btn.wrong-pick { background: var(--lightred); border-color: var(--red); color: var(--red); }
+  .sort-feedback { margin-top: 8px; font-size: 13.5px; font-weight: 600; display: none; }
+  .sort-tally {
+    position: sticky; top: 0; background: var(--navy); color: white; border-radius: 8px;
+    padding: 10px 18px; text-align: center; font-weight: 700; margin-bottom: 16px; font-size: 15px;
+  }
+
+  /* Practice */
+  .practice-item { border: 1px solid var(--border); border-radius: 10px; padding: 18px 22px; margin: 18px 0; background: white; }
+  .practice-item h4 { margin: 0 0 8px; color: var(--navy); font-size: 16px; }
+  .practice-item .prob { font-family: "Cambria Math", Cambria, Georgia, serif; font-size: 19px; margin-bottom: 12px; }
+  .solution-box { display: none; margin-top: 12px; background: var(--lightgreen); border-radius: 8px; padding: 14px 18px; font-size: 14.5px; }
+  .solution-box.shown { display: block; }
+  .solution-box .formula-line { font-family: "Cambria Math", Cambria, Georgia, serif; margin: 4px 0; }
+  .reveal-btn {
+    background: var(--gold); color: white; border: none; border-radius: 6px;
+    padding: 9px 20px; font-size: 14px; font-weight: 600; cursor: pointer;
+  }
+  .reveal-btn:hover { background: #9a6f08; }
+
+  /* Quiz */
+  .quiz-question { border: 1px solid var(--border); border-radius: 10px; padding: 18px 22px; margin: 16px 0; background: white; }
+  .quiz-question h4 { margin: 0 0 4px; color: var(--navy); font-size: 15.5px; }
+  .quiz-tag {
+    display: inline-block; background: var(--lightblue); color: var(--navy);
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 12px; margin-bottom: 8px; letter-spacing: 0.3px;
+  }
+  .quiz-prob { font-family: "Cambria Math", Cambria, Georgia, serif; font-size: 20px; font-weight: 700; color: var(--navy); margin: 8px 0 12px; text-align: center; background: #f7fafc; border-radius: 8px; padding: 12px; }
+  .quiz-answer-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .quiz-input {
+    flex: 1; min-width: 200px; font-size: 16px; padding: 8px 10px;
+    border: 1.5px solid var(--border); border-radius: 6px; font-family: "Cambria Math", Cambria, Georgia, serif;
+  }
+  .quiz-input:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(31,122,108,0.15); }
+  .check-btn {
+    background: var(--teal); color: white; border: none; border-radius: 6px;
+    padding: 9px 18px; font-size: 13.5px; font-weight: 600; cursor: pointer;
+  }
+  .check-btn:hover { background: var(--teal-dark); }
+  .feedback { margin-top: 10px; font-weight: 600; font-size: 14px; padding: 8px 12px; border-radius: 6px; display: none; }
+  .feedback.correct { background: var(--lightgreen); color: var(--green); display: block; }
+  .feedback.incorrect { background: var(--lightred); color: var(--red); display: block; }
+
+  .score-panel {
+    background: linear-gradient(135deg, var(--navy), var(--teal-dark)); color: white;
+    border-radius: 10px; padding: 28px; text-align: center; margin-top: 30px;
+  }
+  .score-panel .big-score { font-size: 40px; font-weight: 800; margin: 8px 0; }
+  .score-panel .action-btn {
+    background: var(--gold); color: white; border: none; border-radius: 6px;
+    padding: 9px 20px; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 14px;
+  }
+  .score-panel .action-btn:hover { background: #9a6f08; }
+
+  .format-note { font-size: 13px; color: #666; margin: 8px 0 16px; }
+
+  footer.page-footer { text-align: center; color: #888; font-size: 12.5px; padding: 20px; border-top: 1px solid var(--border); margin-top: 40px; }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <h1>Factoring Studio</h1>
+  <p>Box-method walkthroughs, perfect square and difference of squares recognition, grouping, type sorting, and practice with instant feedback</p>
+</header>
+
+<div class="wrap">
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="tab-box" onclick="switchTab('tab-box')">Box Method</button>
+    <button class="tab-btn" data-tab="tab-square" onclick="switchTab('tab-square')">Perfect Squares</button>
+    <button class="tab-btn" data-tab="tab-diff" onclick="switchTab('tab-diff')">Difference of Squares</button>
+    <button class="tab-btn" data-tab="tab-group" onclick="switchTab('tab-group')">Factor by Grouping</button>
+    <button class="tab-btn" data-tab="tab-sort" onclick="switchTab('tab-sort')">Sort the Type</button>
+    <button class="tab-btn" data-tab="tab-practice" onclick="switchTab('tab-practice')">Factor Practice</button>
+    <button class="tab-btn" data-tab="tab-quiz" onclick="switchTab('tab-quiz')">Quiz (15 Qs)</button>
+  </div>
+
+  <!-- ============================================================
+       TAB 1: BOX METHOD
+       ============================================================ -->
+  <div class="tab-panel active" id="tab-box">
+    <h2 class="section-title">The Box (Area) Method</h2>
+    <div class="card">
+      <p>The box method turns factoring a trinomial <strong>ax&sup2; + bx + c</strong> into a fill-in-the-grid puzzle. Here's the process:</p>
+      <div class="step-box"><div class="step-num">1</div><div class="step-content">Draw a 2&times;2 box. Put <strong>ax&sup2;</strong> in the top-left cell and <strong>c</strong> in the bottom-right cell.</div></div>
+      <div class="step-box"><div class="step-num">2</div><div class="step-content">Multiply <strong>a &times; c</strong>. Find two numbers that <em>multiply</em> to ac and <em>add</em> to b.</div></div>
+      <div class="step-box"><div class="step-num">3</div><div class="step-content">Place those two numbers (as x-terms) into the other two cells &mdash; either arrangement works.</div></div>
+      <div class="step-box"><div class="step-num">4</div><div class="step-content">Find the <strong>GCF of each row</strong> (these become one binomial's terms) and the <strong>GCF of each column</strong> (these become the other binomial's terms).</div></div>
+      <div class="step-box"><div class="step-num">5</div><div class="step-content">Write the two binomials as your final answer.</div></div>
+    </div>
+
+    <div class="worked-example">
+      <h4>Example A &mdash; Leading coefficient of 1</h4>
+      <div class="given-block">x&sup2; + 7x + 12</div>
+      <div class="step-box"><div class="step-num">1</div><div class="step-content">a = 1, c = 12, so ac = 12. Find two numbers that multiply to 12 and add to 7: <strong>3 and 4</strong>.</div></div>
+      <div class="step-box"><div class="step-num">2</div><div class="step-content">Fill in the box with x&sup2; and 12 on the diagonal, and 3x, 4x in the other two cells:</div></div>
+      <div class="box-wrap">
+        <table class="box-table">
+          <tr><td class="corner"></td><td class="unknown">?</td><td class="unknown">?</td></tr>
+          <tr><td class="unknown">?</td><td class="cell-main">x&sup2;</td><td class="cell-cross">4x</td></tr>
+          <tr><td class="unknown">?</td><td class="cell-cross">3x</td><td class="cell-main">12</td></tr>
+        </table>
+      </div>
+      <div class="step-box"><div class="step-num">3</div><div class="step-content">Top row (x&sup2;, 4x): GCF = <strong>x</strong>. Bottom row (3x, 12): GCF = <strong>3</strong>. Left column (x&sup2;, 3x): GCF = <strong>x</strong>. Right column (4x, 12): GCF = <strong>4</strong>.</div></div>
+      <div class="box-wrap">
+        <table class="box-table">
+          <tr><td class="corner"></td><th>x</th><th>+4</th></tr>
+          <tr><th>x</th><td class="cell-main">x&sup2;</td><td class="cell-cross">4x</td></tr>
+          <tr><th>+3</th><td class="cell-cross">3x</td><td class="cell-main">12</td></tr>
+        </table>
+      </div>
+      <div class="step-box"><div class="step-num">4</div><div class="step-content">Row labels stacked give the left factor: <strong>(x + 3)</strong>. Column labels side-by-side give the top factor: <strong>(x + 4)</strong>.</div></div>
+      <div class="final-answer">x&sup2; + 7x + 12 = (x + 3)(x + 4)</div>
+    </div>
+
+    <div class="worked-example">
+      <h4>Example B &mdash; Leading coefficient greater than 1</h4>
+      <div class="given-block">2x&sup2; + 7x + 3</div>
+      <div class="step-box"><div class="step-num">1</div><div class="step-content">a = 2, c = 3, so ac = 6. Find two numbers that multiply to 6 and add to 7: <strong>6 and 1</strong>.</div></div>
+      <div class="step-box"><div class="step-num">2</div><div class="step-content">Fill in the box with 2x&sup2; and 3 on the diagonal, and 6x, x in the other two cells:</div></div>
+      <div class="box-wrap">
+        <table class="box-table">
+          <tr><td class="corner"></td><td class="unknown">?</td><td class="unknown">?</td></tr>
+          <tr><td class="unknown">?</td><td class="cell-main">2x&sup2;</td><td class="cell-cross">6x</td></tr>
+          <tr><td class="unknown">?</td><td class="cell-cross">x</td><td class="cell-main">3</td></tr>
+        </table>
+      </div>
+      <div class="step-box"><div class="step-num">3</div><div class="step-content">Top row (2x&sup2;, 6x): GCF = <strong>2x</strong>. Bottom row (x, 3): GCF = <strong>1</strong>. Left column (2x&sup2;, x): GCF = <strong>x</strong>. Right column (6x, 3): GCF = <strong>3</strong>.</div></div>
+      <div class="box-wrap">
+        <table class="box-table">
+          <tr><td class="corner"></td><th>x</th><th>+3</th></tr>
+          <tr><th>2x</th><td class="cell-main">2x&sup2;</td><td class="cell-cross">6x</td></tr>
+          <tr><th>+1</th><td class="cell-cross">x</td><td class="cell-main">3</td></tr>
+        </table>
+      </div>
+      <div class="step-box"><div class="step-num">4</div><div class="step-content">Row labels stacked give the left factor: <strong>(2x + 1)</strong>. Column labels side-by-side give the top factor: <strong>(x + 3)</strong>.</div></div>
+      <div class="final-answer">2x&sup2; + 7x + 3 = (2x + 1)(x + 3)</div>
+    </div>
+
+    <div class="note"><strong>Always check:</strong> expand your answer using FOIL to make sure it matches the original trinomial.</div>
+  </div>
+
+  <!-- ============================================================
+       TAB 2: PERFECT SQUARES
+       ============================================================ -->
+  <div class="tab-panel" id="tab-square">
+    <h2 class="section-title">Perfect Square Trinomials</h2>
+    <div class="card">
+      <p>A perfect square trinomial comes from squaring a binomial:</p>
+      <div class="pattern-box">
+        (a + b)&sup2; = a&sup2; + 2ab + b&sup2;<br>
+        (a &minus; b)&sup2; = a&sup2; &minus; 2ab + b&sup2;
+      </div>
+      <p>Instead of using the box method, you can spot this pattern directly with a 3-question test:</p>
+      <div class="step-box"><div class="step-num">1</div><div class="step-content">Is the <strong>first</strong> term a perfect square? Take its square root &rarr; call it <strong>a</strong>.</div></div>
+      <div class="step-box"><div class="step-num">2</div><div class="step-content">Is the <strong>last</strong> term a perfect square? Take its square root &rarr; call it <strong>b</strong>.</div></div>
+      <div class="step-box"><div class="step-num">3</div><div class="step-content">Does the <strong>middle</strong> term equal 2ab (matching sign)? If yes to all three &rarr; it's a perfect square trinomial: <strong>(a + b)&sup2;</strong> or <strong>(a &minus; b)&sup2;</strong>.</div></div>
+
+      <h3 class="sub-title">Example 1:  x&sup2; + 8x + 16</h3>
+      <div class="step-box"><div class="step-content">&radic;x&sup2; = x, &radic;16 = 4. Check: 2(x)(4) = 8x &check; matches, and the sign is positive.</div></div>
+      <div class="final-answer">x&sup2; + 8x + 16 = (x + 4)&sup2;</div>
+
+      <h3 class="sub-title">Example 2:  x&sup2; &minus; 14x + 49</h3>
+      <div class="step-box"><div class="step-content">&radic;x&sup2; = x, &radic;49 = 7. Check: 2(x)(7) = 14x &check; matches, and the sign is negative.</div></div>
+      <div class="final-answer">x&sup2; &minus; 14x + 49 = (x &minus; 7)&sup2;</div>
+
+      <h3 class="sub-title">Example 3:  4x&sup2; + 20x + 25</h3>
+      <div class="step-box"><div class="step-content">&radic;4x&sup2; = 2x, &radic;25 = 5. Check: 2(2x)(5) = 20x &check; matches, and the sign is positive.</div></div>
+      <div class="final-answer">4x&sup2; + 20x + 25 = (2x + 5)&sup2;</div>
+
+      <div class="note"><strong>Always check your answer</strong> by expanding it back out &mdash; e.g., (x+4)&sup2; = x&sup2; + 8x + 16 &check;. This habit catches sign errors immediately.</div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TAB 3: DIFFERENCE OF SQUARES
+       ============================================================ -->
+  <div class="tab-panel" id="tab-diff">
+    <h2 class="section-title">Difference of Squares</h2>
+    <div class="card">
+      <p>A <strong>binomial</strong> (only two terms) factors instantly if it fits this pattern:</p>
+      <div class="pattern-box">a&sup2; &minus; b&sup2; = (a + b)(a &minus; b)</div>
+
+      <h3 class="sub-title">How to Recognize It</h3>
+      <div class="step-box"><div class="step-num">1</div><div class="step-content">There are exactly <strong>two terms</strong> (no middle term).</div></div>
+      <div class="step-box"><div class="step-num">2</div><div class="step-content">Both terms are <strong>perfect squares</strong>.</div></div>
+      <div class="step-box"><div class="step-num">3</div><div class="step-content">The two terms are separated by a <strong>subtraction</strong> sign.</div></div>
+
+      <h3 class="sub-title">Example 1:  x&sup2; &minus; 36</h3>
+      <div class="step-box"><div class="step-content">&radic;x&sup2; = x, &radic;36 = 6.</div></div>
+      <div class="final-answer">x&sup2; &minus; 36 = (x + 6)(x &minus; 6)</div>
+
+      <h3 class="sub-title">Example 2:  9x&sup2; &minus; 4</h3>
+      <div class="step-box"><div class="step-content">&radic;9x&sup2; = 3x, &radic;4 = 2.</div></div>
+      <div class="final-answer">9x&sup2; &minus; 4 = (3x + 2)(3x &minus; 2)</div>
+
+      <h3 class="sub-title">Example 3:  25x&sup2; &minus; 1</h3>
+      <div class="step-box"><div class="step-content">&radic;25x&sup2; = 5x, &radic;1 = 1.</div></div>
+      <div class="final-answer">25x&sup2; &minus; 1 = (5x + 1)(5x &minus; 1)</div>
+
+      <div class="note"><strong>Important:</strong> a <em>sum</em> of squares, a&sup2; + b&sup2;, does <strong>not</strong> factor using real numbers &mdash; only a <em>difference</em> of squares works with this pattern.</div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TAB 4: FACTOR BY GROUPING
+       ============================================================ -->
+  <div class="tab-panel" id="tab-group">
+    <h2 class="section-title">Factor by Grouping</h2>
+    <div class="card">
+      <p>Grouping is used for polynomials with <strong>four terms</strong> (or for trinomials after splitting the middle term, connecting back to the box method).</p>
+      <div class="step-box"><div class="step-num">1</div><div class="step-content">Split the four terms into two groups of two.</div></div>
+      <div class="step-box"><div class="step-num">2</div><div class="step-content">Factor the GCF out of each group separately.</div></div>
+      <div class="step-box"><div class="step-num">3</div><div class="step-content">If both groups now share the same binomial factor, factor that binomial out.</div></div>
+
+      <div class="worked-example">
+        <h4>Example 1:  x&sup3; + 5x&sup2; + 3x + 15</h4>
+        <div class="step-box"><div class="step-content">Group: (x&sup3; + 5x&sup2;) + (3x + 15)</div></div>
+        <div class="step-box"><div class="step-content">Factor each group: x&sup2;(x + 5) + 3(x + 5)</div></div>
+        <div class="step-box"><div class="step-content">Both groups share (x + 5) &mdash; factor it out.</div></div>
+        <div class="final-answer">x&sup3; + 5x&sup2; + 3x + 15 = (x + 5)(x&sup2; + 3)</div>
+      </div>
+
+      <div class="worked-example">
+        <h4>Example 2:  A trinomial split using grouping &mdash; 2x&sup2; + 7x + 3</h4>
+        <div class="step-box"><div class="step-content">From the box method, we know 6 and 1 multiply to ac = 6 and add to b = 7. Split the middle term: 2x&sup2; + 6x + x + 3</div></div>
+        <div class="step-box"><div class="step-content">Group: (2x&sup2; + 6x) + (x + 3) = 2x(x + 3) + 1(x + 3)</div></div>
+        <div class="step-box"><div class="step-content">Both groups share (x + 3) &mdash; factor it out.</div></div>
+        <div class="final-answer">2x&sup2; + 7x + 3 = (x + 3)(2x + 1)</div>
+        <div class="note">This is the exact same answer the box method gave &mdash; grouping and the box method are really the same idea, shown two different ways.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TAB 5: SORT THE TYPE
+       ============================================================ -->
+  <div class="tab-panel" id="tab-sort">
+    <h2 class="section-title">Sort the Type</h2>
+    <p>Before factoring, the fastest first move is recognizing <em>which method</em> applies. Click the correct category for each polynomial below.</p>
+    <div class="sort-tally" id="sort-tally">Score: 0 / 0 attempted</div>
+    <div id="sort-container"></div>
+  </div>
+
+  <!-- ============================================================
+       TAB 6: FACTOR PRACTICE (UNGRADED)
+       ============================================================ -->
+  <div class="tab-panel" id="tab-practice">
+    <h2 class="section-title">Factor Practice (Self-Check, Not Graded)</h2>
+    <p>Factor each polynomial completely on paper, then click <strong>Reveal Solution</strong> to check your work.</p>
+
+    <div class="practice-item">
+      <h4>Practice 1 &mdash; Perfect Square</h4>
+      <div class="prob">x&sup2; + 6x + 9</div>
+      <button class="reveal-btn" onclick="toggleSolution('fpsol1')">Reveal Solution</button>
+      <div class="solution-box" id="fpsol1">
+        <div class="formula-line">&radic;x&sup2; = x, &radic;9 = 3. Check: 2(x)(3) = 6x &check;</div>
+        <div class="formula-line"><strong>(x + 3)&sup2;</strong></div>
+      </div>
+    </div>
+
+    <div class="practice-item">
+      <h4>Practice 2 &mdash; Difference of Squares</h4>
+      <div class="prob">x&sup2; &minus; 64</div>
+      <button class="reveal-btn" onclick="toggleSolution('fpsol2')">Reveal Solution</button>
+      <div class="solution-box" id="fpsol2">
+        <div class="formula-line">&radic;x&sup2; = x, &radic;64 = 8.</div>
+        <div class="formula-line"><strong>(x + 8)(x &minus; 8)</strong></div>
+      </div>
+    </div>
+
+    <div class="practice-item">
+      <h4>Practice 3 &mdash; Box Method (a = 1)</h4>
+      <div class="prob">x&sup2; + 5x + 6</div>
+      <button class="reveal-btn" onclick="toggleSolution('fpsol3')">Reveal Solution</button>
+      <div class="solution-box" id="fpsol3">
+        <div class="formula-line">ac = 6. Two numbers that multiply to 6 and add to 5: 2 and 3.</div>
+        <div class="formula-line"><strong>(x + 2)(x + 3)</strong></div>
+      </div>
+    </div>
+
+    <div class="practice-item">
+      <h4>Practice 4 &mdash; Box Method (a &gt; 1)</h4>
+      <div class="prob">2x&sup2; + 9x + 4</div>
+      <button class="reveal-btn" onclick="toggleSolution('fpsol4')">Reveal Solution</button>
+      <div class="solution-box" id="fpsol4">
+        <div class="formula-line">ac = 8. Two numbers that multiply to 8 and add to 9: 8 and 1.</div>
+        <div class="formula-line">Split: 2x&sup2; + 8x + x + 4 = 2x(x + 4) + 1(x + 4)</div>
+        <div class="formula-line"><strong>(x + 4)(2x + 1)</strong></div>
+      </div>
+    </div>
+
+    <div class="practice-item">
+      <h4>Practice 5 &mdash; Grouping</h4>
+      <div class="prob">x&sup3; + 2x&sup2; + 5x + 10</div>
+      <button class="reveal-btn" onclick="toggleSolution('fpsol5')">Reveal Solution</button>
+      <div class="solution-box" id="fpsol5">
+        <div class="formula-line">(x&sup3; + 2x&sup2;) + (5x + 10) = x&sup2;(x + 2) + 5(x + 2)</div>
+        <div class="formula-line"><strong>(x + 2)(x&sup2; + 5)</strong></div>
+      </div>
+    </div>
+
+    <div class="practice-item">
+      <h4>Practice 6 &mdash; Grouping That Factors Further</h4>
+      <div class="prob">x&sup3; + 3x&sup2; &minus; 4x &minus; 12</div>
+      <button class="reveal-btn" onclick="toggleSolution('fpsol6')">Reveal Solution</button>
+      <div class="solution-box" id="fpsol6">
+        <div class="formula-line">(x&sup3; + 3x&sup2;) &minus; (4x + 12) = x&sup2;(x + 3) &minus; 4(x + 3) = (x + 3)(x&sup2; &minus; 4)</div>
+        <div class="formula-line">Notice x&sup2; &minus; 4 is a difference of squares &mdash; keep factoring!</div>
+        <div class="formula-line"><strong>(x + 3)(x + 2)(x &minus; 2)</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TAB 7: QUIZ (15 Qs, SCORED)
+       ============================================================ -->
+  <div class="tab-panel" id="tab-quiz">
+    <h2 class="section-title">Quiz &mdash; 15 Questions</h2>
+    <p>Factor each polynomial completely, then click <strong>Check Answer</strong>. When you're finished, click <strong>Calculate My Score</strong>.</p>
+    <div class="format-note">Format your answer as factored binomials, e.g. <strong>(x+2)(x-5)</strong>. For a repeated factor, you may write <strong>(x+3)(x+3)</strong> or <strong>(x+3)^2</strong>. Use <strong>^2</strong> for any squared variable inside a factor, e.g. <strong>(x^2+3)</strong>. Spacing doesn't matter.</div>
+
+    <div id="quiz-container"></div>
+
+    <div class="score-panel">
+      <div style="font-size:14px; opacity:0.85; text-transform:uppercase; letter-spacing:0.5px;">Your Results</div>
+      <div class="big-score" id="final-score-display">— / 15</div>
+      <div id="final-score-message" style="font-size:15px;"></div>
+      <button class="action-btn" onclick="calculateScore()">Calculate My Score</button>
+    </div>
+  </div>
+
+</div>
+
+<footer class="page-footer">
+  Factoring Studio &middot; Box Method, Perfect Squares, Difference of Squares &amp; Grouping &middot; Interactive Lesson
+</footer>
+
+<script>
+/* ============================================================
+   TAB SWITCHING
+   ============================================================ */
+function switchTab(id) {
+  var panels = document.querySelectorAll(".tab-panel");
+  for (var i = 0; i < panels.length; i++) { panels[i].classList.remove("active"); }
+  var btns = document.querySelectorAll(".tab-btn");
+  for (var j = 0; j < btns.length; j++) { btns[j].classList.remove("active"); }
+  document.getElementById(id).classList.add("active");
+  document.querySelector('.tab-btn[data-tab="' + id + '"]').classList.add("active");
+}
+
+/* ============================================================
+   PRACTICE REVEAL TOGGLES
+   ============================================================ */
+function toggleSolution(id) {
+  document.getElementById(id).classList.toggle("shown");
+}
+
+/* ============================================================
+   SORT THE TYPE
+   ============================================================ */
+var sortData = [
+  { poly: "x&sup2; + 10x + 25", correct: "square" },
+  { poly: "x&sup2; &minus; 49", correct: "diff" },
+  { poly: "x&sup2; + 7x + 12", correct: "box" },
+  { poly: "x&sup3; + 4x&sup2; + 3x + 12", correct: "group" },
+  { poly: "9x&sup2; &minus; 30x + 25", correct: "square" },
+  { poly: "4x&sup2; &minus; 9", correct: "diff" },
+  { poly: "x&sup2; &minus; x &minus; 6", correct: "box" },
+  { poly: "3x&sup3; &minus; 6x&sup2; + 4x &minus; 8", correct: "group" },
+  { poly: "x&sup2; + 12x + 36", correct: "square" },
+  { poly: "16x&sup2; &minus; 1", correct: "diff" }
+];
+var sortLabels = { square: "Perfect Square", diff: "Difference of Squares", box: "Simple Trinomial (Box)", group: "Grouping" };
+var sortAttempted = 0, sortCorrect = 0;
+
+function buildSortTab() {
+  var container = document.getElementById("sort-container");
+  sortData.forEach(function (item, idx) {
+    var div = document.createElement("div");
+    div.className = "sort-item";
+    div.innerHTML =
+      '<div class="sort-poly">' + item.poly + '</div>' +
+      '<div class="sort-btns" id="sort-btns-' + idx + '">' +
+      Object.keys(sortLabels).map(function (key) {
+        return '<button class="sort-btn" onclick="sortPick(' + idx + ', \'' + key + '\')">' + sortLabels[key] + '</button>';
+      }).join("") +
+      '</div>' +
+      '<div class="sort-feedback" id="sort-fb-' + idx + '"></div>';
+    container.appendChild(div);
+  });
+}
+
+function sortPick(idx, chosen) {
+  var item = sortData[idx];
+  var btnGroup = document.getElementById("sort-btns-" + idx);
+  var buttons = btnGroup.querySelectorAll(".sort-btn");
+  var alreadyAnswered = btnGroup.getAttribute("data-answered");
+  if (alreadyAnswered) return; // only count first attempt per item
+
+  btnGroup.setAttribute("data-answered", "true");
+  sortAttempted++;
+
+  var isCorrect = (chosen === item.correct);
+  if (isCorrect) sortCorrect++;
+
+  for (var bi = 0; bi < buttons.length; bi++) {
+    var btn = buttons[bi];
+    var key = null;
+    for (var k in sortLabels) { if (btn.textContent === sortLabels[k]) key = k; }
+    if (key === item.correct) btn.classList.add("correct-pick");
+    else if (key === chosen && !isCorrect) btn.classList.add("wrong-pick");
+  }
+
+  var fb = document.getElementById("sort-fb-" + idx);
+  fb.style.display = "block";
+  if (isCorrect) {
+    fb.style.color = "#1b7a2e";
+    fb.textContent = "\u2713 Correct! This is a " + sortLabels[item.correct] + ".";
+  } else {
+    fb.style.color = "#b3261e";
+    fb.textContent = "\u2717 Not quite. This is actually a " + sortLabels[item.correct] + ".";
+  }
+
+  document.getElementById("sort-tally").textContent = "Score: " + sortCorrect + " / " + sortAttempted + " attempted";
+}
+
+buildSortTab();
+
+/* ============================================================
+   QUIZ (15 QUESTIONS)
+   ============================================================ */
+var quizData = [
+  { tag: "Perfect Square", prob: "x&sup2; + 8x + 16", factors: ["(x+4)", "(x+4)"] },
+  { tag: "Perfect Square", prob: "x&sup2; &minus; 14x + 49", factors: ["(x-7)", "(x-7)"] },
+  { tag: "Perfect Square", prob: "4x&sup2; + 20x + 25", factors: ["(2x+5)", "(2x+5)"] },
+  { tag: "Difference of Squares", prob: "x&sup2; &minus; 36", factors: ["(x+6)", "(x-6)"] },
+  { tag: "Difference of Squares", prob: "9x&sup2; &minus; 4", factors: ["(3x+2)", "(3x-2)"] },
+  { tag: "Difference of Squares", prob: "25x&sup2; &minus; 1", factors: ["(5x+1)", "(5x-1)"] },
+  { tag: "Box Method", prob: "x&sup2; + 9x + 20", factors: ["(x+4)", "(x+5)"] },
+  { tag: "Box Method", prob: "x&sup2; &minus; 3x &minus; 10", factors: ["(x-5)", "(x+2)"] },
+  { tag: "Box Method", prob: "x&sup2; + 2x &minus; 24", factors: ["(x+6)", "(x-4)"] },
+  { tag: "Box Method", prob: "x&sup2; &minus; 11x + 30", factors: ["(x-5)", "(x-6)"] },
+  { tag: "Box Method (a > 1)", prob: "2x&sup2; + 11x + 5", factors: ["(2x+1)", "(x+5)"] },
+  { tag: "Box Method (a > 1)", prob: "3x&sup2; &minus; 5x &minus; 2", factors: ["(3x+1)", "(x-2)"] },
+  { tag: "Grouping", prob: "x&sup3; + 5x&sup2; + 3x + 15", factors: ["(x+5)", "(x^2+3)"] },
+  { tag: "Grouping", prob: "2x&sup3; &minus; 6x&sup2; + 5x &minus; 15", factors: ["(x-3)", "(2x^2+5)"] },
+  { tag: "Grouping + Difference of Squares", prob: "x&sup3; &minus; 2x&sup2; &minus; 9x + 18&nbsp;&nbsp;(factor completely!)", factors: ["(x-2)", "(x-3)", "(x+3)"] }
+];
+var quizScores = {};
+
+function buildQuizTab() {
+  var container = document.getElementById("quiz-container");
+  quizData.forEach(function (q, idx) {
+    quizScores[idx] = false;
+    var div = document.createElement("div");
+    div.className = "quiz-question";
+    div.innerHTML =
+      '<span class="quiz-tag">' + q.tag + '</span>' +
+      '<h4>Question ' + (idx + 1) + '</h4>' +
+      '<div class="quiz-prob">' + q.prob + '</div>' +
+      '<div class="quiz-answer-row">' +
+      '<input type="text" class="quiz-input" id="quiz-input-' + idx + '" placeholder="e.g. (x+2)(x-5)">' +
+      '<button class="check-btn" onclick="checkQuizAnswer(' + idx + ')">Check Answer</button>' +
+      '</div>' +
+      '<div class="feedback" id="quiz-fb-' + idx + '"></div>';
+    container.appendChild(div);
+  });
+}
+
+function normalizeAnswer(str) {
+  str = str.toLowerCase().replace(/\s+/g, '');
+  str = str.replace(/\u00b2/g, '^2'); // ² -> ^2
+  // duplicate a squared single factor: (....)^2 -> (....)(....)
+  str = str.replace(/(\([^)]*\))\^2/g, '$1$1');
+  return str;
+}
+
+function extractFactors(str) {
+  var matches = str.match(/\([^)]*\)/g) || [];
+  return matches.slice().sort();
+}
+
+function checkQuizAnswer(idx) {
+  var q = quizData[idx];
+  var inputVal = document.getElementById('quiz-input-' + idx).value;
+  var normInput = normalizeAnswer(inputVal);
+  var inputFactors = extractFactors(normInput);
+
+  var expectedNorm = q.factors.map(function (f) { return normalizeAnswer(f); }).sort();
+
+  var isCorrect = false;
+  if (inputFactors.length === expectedNorm.length) {
+    isCorrect = true;
+    for (var i = 0; i < inputFactors.length; i++) {
+      if (inputFactors[i] !== expectedNorm[i]) { isCorrect = false; break; }
+    }
+  }
+
+  var fb = document.getElementById('quiz-fb-' + idx);
+  if (isCorrect) {
+    fb.className = "feedback correct";
+    fb.innerHTML = "&#10003; Correct!";
+    quizScores[idx] = true;
+  } else {
+    fb.className = "feedback incorrect";
+    fb.innerHTML = "&#10007; Not quite. Double-check your factors and try again.";
+    quizScores[idx] = false;
+  }
+}
+
+function calculateScore() {
+  var total = quizData.length;
+  var score = 0;
+  var keys = Object.keys(quizScores);
+  for (var k = 0; k < keys.length; k++) { if (quizScores[keys[k]]) score++; }
+  document.getElementById("final-score-display").textContent = score + " / " + total;
+
+  var msg;
+  var pct = (score / total) * 100;
+  if (pct === 100) msg = "Outstanding! You've mastered every factoring method in this studio.";
+  else if (pct >= 80) msg = "Great work! Review the ones you missed and try again.";
+  else if (pct >= 60) msg = "Good effort. Revisit the method tabs for the types you missed, then try again.";
+  else msg = "Keep practicing! Work back through the Box Method, Perfect Squares, Difference of Squares, and Grouping tabs, then retry.";
+  document.getElementById("final-score-message").textContent = msg;
+}
+
+buildQuizTab();
+</script>
+
+</body>
+</html>
